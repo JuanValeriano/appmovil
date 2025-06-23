@@ -9,7 +9,7 @@ from deepface import DeepFace
 # Config
 MODELO = "Facenet"
 DETECTOR = "mtcnn"
-UMBRAL_CONFIANZA = 50
+UMBRAL_CONFIANZA = 80
 
 # Cargar modelo y etiquetas
 modelo = joblib.load("modelo_knn.pkl")
@@ -53,7 +53,7 @@ def reconocer():
         pred = modelo.predict([emb_vec])[0]
         dist, _ = modelo.kneighbors([emb_vec], n_neighbors=1, return_distance=True)
         confianza = round(100 - dist[0][0], 2)
-        nombre = nombres[pred] if confianza >= UMBRAL_CONFIANZA else "Desconocido"
+        nombre = nombres[pred] if confianza >= UMBRAL_CONFIANZA else "No requisitoriado"
 
         return jsonify({
             "nombre": nombre,
